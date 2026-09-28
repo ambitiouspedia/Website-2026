@@ -1,109 +1,501 @@
-import { 
-  Laptop, 
-  Keyboard, 
-  Cpu, 
-  CircuitBoard, 
-  Server, 
-  AppWindow, 
-  Briefcase, 
-  Code, 
-  Cloud, 
-  ShieldCheck 
-} from 'lucide-react';
+// ─── Services ──────────────────────────────────────────────────────────────
+// Copy is written from the founder's positioning brief (2026-09-28): business
+// language first, platform/technology names second. Do not add claims such as
+// "certified partner", client counts or outcome percentages — Ambitious Pedia
+// is not (yet) a certified Zoho or Frappe partner, and no measured results
+// have been supplied.
 
-export const servicesData = {
-  hardware: [
-    {
-      id: 'laptops-desktops',
-      title: 'Laptops & Desktops',
-      description: 'Enterprise-grade computing solutions tailored for performance, durability, and business efficiency.',
-      icon: Laptop,
-      image: 'https://698cd7bfb7349d44aaf1f497.imgix.net/WhatsApp%20Image%202026-02-12%20at%201.04.42%20AM.jpeg',
-      details: 'We partner with global technology leaders like Dell, HP, Lenovo, and Apple to provide robust computing infrastructure for your workforce. Whether you need lightweight ultrabooks for your mobile sales team, powerful workstations for engineering, or reliable all-in-one desktops for administrative tasks, we ensure every device meets your specific performance benchmarks. Our end-to-end service includes bulk procurement, asset tagging, custom image deployment, and lifecycle management.',
-      features: ['Intel Core i7/i9, Xeon & Apple M-Series Processors', 'Authorized Reseller Warranty & Support', 'Bulk Corporate Procurement & Leasing', 'On-site Installation & Data Migration']
-    },
-    {
-      id: 'peripherals-accessories',
-      title: 'Peripherals & Accessories',
-      description: 'Optimizing professional workspaces with high-quality monitors, input devices, and connectivity hubs.',
-      icon: Keyboard,
-      image: 'https://698cd7bfb7349d44aaf1f497.imgix.net/WhatsApp%20Image%202026-02-12%20at%201.05.31%20AM.jpeg',
-      details: 'A productive workspace requires more than just a computer. We supply the essential ecosystem that drives efficiency. From high-resolution 4K and curved monitors for multitasking to ergonomic mechanical keyboards and precision mice that reduce strain. We also equip conference rooms with high-fidelity audio-video systems, noise-canceling headsets for remote collaboration, and universal USB-C docking stations for seamless connectivity.',
-      features: ['4K, IPS & Curved Business Monitors', 'Ergonomic Keyboards & Precision Mice', 'Universal Thunderbolt & USB-C Docks', 'HD Webcams & Conference Room Solutions']
-    },
-    {
-      id: 'custom-builds',
-      title: 'Custom Builds',
-      description: 'Purpose-built high-performance machines for gaming, 3D rendering, AI training, and specialized industrial tasks.',
-      icon: Cpu,
-      image: 'https://698cd7bfb7349d44aaf1f497.imgix.net/WhatsApp%20Image%202026-02-12%20at%201.10.37%20AM.jpeg',
-      details: 'When off-the-shelf commercial solutions fall short, our Custom Build division delivers. We engineer bespoke rigs tailored strictly to your software requirements. This includes liquid-cooled workstations for silence and thermal management, multi-GPU setups for deep learning and rendering, and overclocked systems for competitive gaming centers. Every build undergoes rigorous 72-hour stress testing before delivery.',
-      features: ['NVIDIA RTX 40-Series & Quadro GPUs', 'Custom Liquid Cooling Loops', 'High-Speed DDR5 & ECC Memory', 'Stress-Tested for Stability & Thermals']
-    },
-    {
-      id: 'electronic-components',
-      title: 'Electronic Components',
-      description: 'Global sourcing of reliable semiconductors, passives, and electromechanical parts for manufacturing and repair.',
-      icon: CircuitBoard,
-      image: 'https://698cd7bfb7349d44aaf1f497.imgix.net/WhatsApp%20Image%202026-02-12%20at%201.12.39%20AM.jpeg',
-      details: 'We bridge the gap in your supply chain. Whether you need microcontrollers for IoT device manufacturing, specific industrial sensors for automation lines, or hard-to-find obsolete components to repair legacy machinery, our global network ensures timely delivery. We strictly adhere to quality control standards, verifying authenticity and providing full traceability for all sourced components.',
-      features: ['Semiconductors, ICs & Microcontrollers', 'Industrial IoT Sensors & Modules', 'Obsolete & Hard-to-Find Part Sourcing', 'Authenticity Verification & Traceability']
-    },
-    {
-      id: 'servers-equipment',
-      title: 'Servers & Equipment',
-      description: 'Scalable data center infrastructure including rack servers, storage arrays, and enterprise-grade networking.',
-      icon: Server,
-      image: 'https://698cd7bfb7349d44aaf1f497.imgix.net/WhatsApp%20Image%202026-02-12%20at%201.08.36%20AM.jpeg',
-      details: 'Build a resilient digital backbone for your organization. We provide scalable rack, tower, and blade servers tailored for virtualization and database management. Our networking solutions include high-speed Layer 3 switches, enterprise routers, and next-gen firewalls from brands like Cisco, Ubiquiti, and Dell EMC. Our team also assists with server room design, thermal management, and structured cabling installation.',
-      features: ['Rack, Tower & Blade Servers', 'NAS & SAN Enterprise Storage', 'Layer 3 Switches, Routers & Firewalls', 'Structured Cabling & Rack Installation']
-    }
-  ],
-  software: [
-    {
-      id: 'operating-systems',
-      title: 'Operating Systems & Office Suites',
-      description: 'Licensing and installation for Windows, macOS, Linux, Microsoft Office, Google Workspace, and more.',
-      icon: AppWindow,
-      image: 'https://698cd7bfb7349d44aaf1f497.imgix.net/WhatsApp%20Image%202026-02-12%20at%201.16.17%20AM.jpeg',
-      details: 'Ensure your infrastructure is secure, compliant, and up-to-date with genuine software licensing. We manage Volume Licensing for Microsoft Windows 11 Enterprise and Windows Server, facilitate the deployment of Red Hat Enterprise Linux for mission-critical servers, and handle MDM solutions for macOS fleets. We also provide support for legacy OS virtualization needed for specialized industrial equipment.',
-      features: ['Microsoft Volume Licensing (Open/CSP)', 'Red Hat Enterprise & Ubuntu Server', 'MacOS Device Management (MDM)', 'Legacy OS Support & Virtualization']
-    },
-    {
-      id: 'security-software',
-      title: 'Antivirus & Security Software',
-      description: 'Robust protection against malware, ransomware, and cyber threats to keep your data safe.',
-      icon: ShieldCheck,
-      image: 'https://698cd7bfb7349d44aaf1f497.imgix.net/WhatsApp%20Image%202026-02-12%20at%201.18.13%20AM.jpeg',
-      details: 'In an era of sophisticated cyber attacks, reactive security is not enough. We deploy proactive defense mechanisms including top-tier Endpoint Detection and Response (EDR), Data Loss Prevention (DLP) tools, and advanced firewall software. We partner with leaders like Bitdefender, Sophos, and Symantec to ensure your intellectual property, customer data, and internal communications remain secure from ransomware and phishing.',
-      features: ['Endpoint Detection & Response (EDR)', 'Ransomware & Malware Protection', 'Firewall, VPN & Network Security', 'Data Encryption & DLP Solutions']
-    },
-    {
-      id: 'business-management',
-      title: 'Business Management Software',
-      description: 'CRM, ERP, accounting software, and project management tools to streamline your business processes.',
-      icon: Briefcase,
-      image: 'https://698cd7bfb7349d44aaf1f497.imgix.net/WhatsApp%20Image%202026-02-12%20at%201.21.46%20AM.jpeg',
-      details: 'Digitalize and automate your core business processes. We consult, license, and implement industry-standard software suites. This includes Accounting software (Tally, QuickBooks), Customer Relationship Management (Salesforce, Zoho CRM), and Enterprise Resource Planning systems (SAP, Oracle NetSuite). We ensure these tools are integrated seamlessly to allow data to flow between sales, finance, and inventory departments.',
-      features: ['ERP Implementation & Consultation', 'CRM Setup & Customization', 'Accounting, Billing & Invoicing Tools', 'HRMS & Payroll Automation Systems']
-    },
-    {
-      id: 'custom-development',
-      title: 'Custom Software Development',
-      description: 'Bespoke software tailored to your unique business requirements, from web applications to specialized tools.',
-      icon: Code,
-      image: 'https://698cd7bfb7349d44aaf1f497.imgix.net/WhatsApp%20Image%202026-02-12%20at%201.23.47%20AM.jpeg',
-      details: 'Your business is unique, and off-the-shelf software doesn\'t always fit. Our in-house development team builds secure, scalable, and custom applications using modern tech stacks like React, Node.js, Python, and Flutter. From internal dashboards and automation scripts to customer-facing mobile apps and eCommerce platforms, we handle the full lifecycle: requirement gathering, UI/UX design, development, testing, and deployment.',
-      features: ['Full-Stack Web & Mobile App Development', 'API Development & System Integration', 'UI/UX Design & Prototyping', 'Agile Methodology & Ongoing Support']
-    },
-    {
-      id: 'cloud-solutions',
-      title: 'Cloud Solutions',
-      description: 'Setup and management of cloud-based services for storage, collaboration, and application hosting.',
-      icon: Cloud,
-      image: 'https://698cd7bfb7349d44aaf1f497.imgix.net/WhatsApp%20Image%202026-02-12%20at%201.21.03%20AM.jpeg',
-      details: 'Transition to the cloud with confidence. We analyze your on-premise infrastructure and execute seamless migrations to public, private, or hybrid clouds. Our certified experts manage environments on AWS, Microsoft Azure, and Google Cloud Platform. Services include setting up auto-scaling architectures, configuring CI/CD pipelines for developers, implementing disaster recovery plans, and optimizing cloud costs.',
-      features: ['AWS, Azure & GCP Infrastructure', 'Serverless Architecture & Microservices', 'Automated Backups & Disaster Recovery', 'Cloud Cost Optimization & Monitoring']
-    }
-  ]
-};
+export type ServiceGroupId = "business" | "technology" | "ai" | "growth";
+
+export interface ServiceGroup {
+  id: ServiceGroupId;
+  name: string;
+  summary: string;
+  /** Sub-capabilities listed on the group card, each pointing at a service page. */
+  items: { label: string; slug: string }[];
+}
+
+export interface Service {
+  slug: string;
+  group: ServiceGroupId;
+  /** Business-language name used everywhere as the primary label. */
+  name: string;
+  /** Short nav/card label. */
+  shortName: string;
+  icon: IconName;
+  /** One-line promise shown on cards and as the meta description. */
+  summary: string;
+  /** The key message for the service, shown prominently on its page. */
+  keyMessage: string;
+  intro: string;
+  /** Problems a business owner would recognise. */
+  problems: string[];
+  /** What we actually do — grouped capability list. */
+  capabilities: { title: string; points: string[] }[];
+  /** Platforms/technology — deliberately secondary to the business copy. */
+  platforms: string[];
+  platformsNote?: string;
+  related: string[];
+}
+
+export type IconName =
+  | "erp"
+  | "crm"
+  | "ai"
+  | "code"
+  | "web"
+  | "server"
+  | "growth"
+  | "link";
+
+export const SERVICE_GROUPS: ServiceGroup[] = [
+  {
+    id: "business",
+    name: "Business Transformation",
+    summary:
+      "Move sales, accounts and operations out of spreadsheets and into systems that fit how you work.",
+    items: [
+      { label: "ERP", slug: "erp-business-software" },
+      { label: "CRM", slug: "crm-sales-automation" },
+      { label: "Accounting", slug: "erp-business-software" },
+      { label: "Process Automation", slug: "ai-business-automation" },
+    ],
+  },
+  {
+    id: "technology",
+    name: "Technology",
+    summary:
+      "Custom applications, websites, integrations and the IT infrastructure that keeps them running.",
+    items: [
+      { label: "Custom Software", slug: "custom-software-development" },
+      { label: "Web Development", slug: "website-development" },
+      { label: "Integrations", slug: "integrations" },
+      { label: "Cloud & IT Infrastructure", slug: "it-infrastructure-cloud" },
+    ],
+  },
+  {
+    id: "ai",
+    name: "AI & Automation",
+    summary:
+      "AI assistants and automations that work with your own processes and data.",
+    items: [
+      { label: "AI Assistants", slug: "ai-business-automation" },
+      { label: "Business Automation", slug: "ai-business-automation" },
+      { label: "WhatsApp / Telegram Automation", slug: "ai-business-automation" },
+      { label: "AI Integrations", slug: "integrations" },
+    ],
+  },
+  {
+    id: "growth",
+    name: "Growth",
+    summary:
+      "Marketing that is measured by leads and sales, connected to your CRM.",
+    items: [
+      { label: "SEO", slug: "digital-marketing" },
+      { label: "Digital Marketing", slug: "digital-marketing" },
+      { label: "Lead Generation", slug: "digital-marketing" },
+      { label: "Marketing Automation", slug: "crm-sales-automation" },
+    ],
+  },
+];
+
+export const SERVICES: Service[] = [
+  {
+    slug: "erp-business-software",
+    group: "business",
+    name: "ERP & Business Software Implementation",
+    shortName: "ERP & Business Software",
+    icon: "erp",
+    summary:
+      "ERP, accounting and business software implemented around your actual business processes.",
+    keyMessage:
+      "We don't just sell software. We implement it according to how your business actually works.",
+    intro:
+      "Buying an ERP is the easy part. Getting it to match your sales, purchase, inventory, production and accounts processes — and getting your team to use it — is where most implementations struggle. We start with your processes, recommend the right platform, then configure, migrate, train and support.",
+    problems: [
+      "Sales, stock and accounts live in different spreadsheets",
+      "The software you bought is only half used",
+      "Reports take days to compile by hand",
+      "Nobody is sure which system has the correct numbers",
+    ],
+    capabilities: [
+      {
+        title: "Plan",
+        points: [
+          "Business process analysis",
+          "Software selection",
+          "Implementation roadmap",
+        ],
+      },
+      {
+        title: "Implement",
+        points: [
+          "Configuration and customization",
+          "Data migration from Excel or old systems",
+          "User setup, roles and permissions",
+        ],
+      },
+      {
+        title: "Automate & connect",
+        points: [
+          "Workflow automation",
+          "Reports and dashboards",
+          "Integration with your other systems",
+        ],
+      },
+      {
+        title: "Adopt",
+        points: ["Team training", "Ongoing support and improvements"],
+      },
+    ],
+    platforms: [
+      "Zoho One",
+      "Zoho CRM",
+      "Zoho Books",
+      "ERPNext",
+      "Tally-related solutions",
+      "Other business management systems",
+    ],
+    platformsNote:
+      "We recommend a platform after understanding your process — not before.",
+    related: ["crm-sales-automation", "integrations", "ai-business-automation"],
+  },
+  {
+    slug: "crm-sales-automation",
+    group: "business",
+    name: "CRM Implementation & Sales Automation",
+    shortName: "CRM & Sales Automation",
+    icon: "crm",
+    summary:
+      "Manage every lead, follow-up, quotation and order in one system — with the reminders automated.",
+    keyMessage:
+      "Every lead tracked, every follow-up on time, every customer visible — from first enquiry to repeat business.",
+    intro:
+      "When leads live in notebooks, WhatsApp chats and individual salespeople's phones, follow-ups get missed and customers slip away. We set up a CRM around your sales stages and automate the repetitive parts, so your team spends its time selling.",
+    problems: [
+      "Leads are not tracked properly",
+      "Follow-ups depend on someone remembering",
+      "Quotations are made manually in Word or Excel",
+      "Management has no clear view of the sales pipeline",
+    ],
+    capabilities: [
+      {
+        title: "Set up",
+        points: [
+          "CRM implementation",
+          "Lead and customer management",
+          "Sales pipeline designed around your stages",
+        ],
+      },
+      {
+        title: "Sell",
+        points: [
+          "Quotation management",
+          "Follow-up automation",
+          "Sales-stage automation",
+        ],
+      },
+      {
+        title: "Communicate",
+        points: [
+          "Email and WhatsApp automation",
+          "Customer communication",
+          "Marketing automation",
+        ],
+      },
+      {
+        title: "Measure",
+        points: ["Sales reports and dashboards"],
+      },
+    ],
+    platforms: ["Zoho CRM", "Zoho One", "ERPNext CRM", "WhatsApp", "Email"],
+    related: ["erp-business-software", "digital-marketing", "integrations"],
+  },
+  {
+    slug: "ai-business-automation",
+    group: "ai",
+    name: "AI & Business Automation",
+    shortName: "AI & Automation",
+    icon: "ai",
+    summary:
+      "AI assistants and automations connected to your ERP, CRM and documents — not a generic chatbot.",
+    keyMessage:
+      "AI that works with your business processes and data — not just a generic chatbot.",
+    intro:
+      "Useful business AI needs access to your real information: orders, stock, customers, documents and procedures. We build assistants and automations that connect to the systems you already use, and we automate repetitive work in WhatsApp, Telegram, email and reports. We are actively building AI assistants that work with ERPNext and OpenClaw.",
+    problems: [
+      "Staff spend hours answering the same internal questions",
+      "Data is re-typed from documents into systems",
+      "Reports are prepared manually every week",
+      "Customers wait for replies outside office hours",
+    ],
+    capabilities: [
+      {
+        title: "AI assistants",
+        points: [
+          "AI business assistants",
+          "Internal company knowledge assistants",
+          "AI connected with ERP / CRM",
+          "AI-based sales assistance",
+        ],
+      },
+      {
+        title: "Customer-facing",
+        points: [
+          "AI-based customer support",
+          "WhatsApp automation",
+          "Telegram automation",
+        ],
+      },
+      {
+        title: "Back-office automation",
+        points: [
+          "AI document and data processing",
+          "Automated reporting",
+          "Workflow automation",
+        ],
+      },
+    ],
+    platforms: [
+      "ERPNext",
+      "OpenClaw",
+      "Zoho",
+      "WhatsApp",
+      "Telegram",
+      "Python",
+      "Node.js",
+    ],
+    related: ["integrations", "erp-business-software", "custom-software-development"],
+  },
+  {
+    slug: "custom-software-development",
+    group: "technology",
+    name: "Custom Business Applications",
+    shortName: "Custom Software",
+    icon: "code",
+    summary:
+      "Business applications built for your workflow when off-the-shelf software doesn't fit.",
+    keyMessage:
+      "When existing software doesn't fit your process, we build the application that does.",
+    intro:
+      "Some processes are too specific for a standard product — or you only need one part of a large system. We design and build focused business applications, portals and dashboards, and connect them to the tools you already use.",
+    problems: [
+      "Off-the-shelf software forces you to change how you work",
+      "You pay for a large system but use one module",
+      "Customers or dealers need their own portal",
+      "Critical processes run on fragile spreadsheets",
+    ],
+    capabilities: [
+      {
+        title: "Operations",
+        points: [
+          "Inventory management systems",
+          "Sales quotation systems",
+          "Workflow applications",
+        ],
+      },
+      {
+        title: "People & customers",
+        points: ["HRMS", "CRM", "Customer portals", "Internal business portals"],
+      },
+      {
+        title: "Data & connectivity",
+        points: ["Dashboards", "Web applications", "API integrations"],
+      },
+    ],
+    platforms: [
+      "React.js",
+      "Node.js",
+      "Express.js",
+      "MongoDB",
+      "PostgreSQL",
+      "Supabase",
+      "JavaScript",
+      "Python",
+    ],
+    platformsNote:
+      "We choose the technology for maintainability and fit — you own the result.",
+    related: ["integrations", "ai-business-automation", "website-development"],
+  },
+  {
+    slug: "website-development",
+    group: "technology",
+    name: "Business Websites & Web Applications",
+    shortName: "Website Development",
+    icon: "web",
+    summary:
+      "Websites built to generate enquiries — fast, SEO-friendly and connected to your CRM.",
+    keyMessage:
+      "A website should not just look good. It should bring in enquiries and support your sales team.",
+    intro:
+      "We build corporate, product and B2B websites and web applications with performance, search visibility and lead capture designed in from the start — and enquiries flowing straight into your CRM instead of an inbox.",
+    problems: [
+      "The website looks outdated and brings no enquiries",
+      "Enquiries arrive by email and get lost",
+      "Pages are slow and don't show up on Google",
+      "Nobody can update the site easily",
+    ],
+    capabilities: [
+      {
+        title: "Websites",
+        points: [
+          "Corporate websites",
+          "Product websites",
+          "B2B websites",
+          "E-commerce",
+        ],
+      },
+      {
+        title: "Web applications",
+        points: ["React-based websites", "Custom web applications", "API integrations"],
+      },
+      {
+        title: "Growth-ready",
+        points: [
+          "SEO-friendly development",
+          "Performance optimization",
+          "Website maintenance",
+        ],
+      },
+    ],
+    platforms: ["React.js", "Next.js", "Node.js", "Vercel", "Zoho / CRM lead capture"],
+    related: ["digital-marketing", "crm-sales-automation", "integrations"],
+  },
+  {
+    slug: "integrations",
+    group: "technology",
+    name: "System Integrations",
+    shortName: "Integrations",
+    icon: "link",
+    summary:
+      "Connect CRM, ERP, accounting, website, WhatsApp and AI so data is entered once.",
+    keyMessage:
+      "Enter information once. Let your systems share it automatically.",
+    intro:
+      "Most growing businesses use several good tools that don't talk to each other — so the same customer, order or invoice is typed again and again. We connect your systems so data flows between them automatically and everyone works from the same information.",
+    problems: [
+      "The same data is entered in multiple systems",
+      "Accounts and sales data are disconnected",
+      "Website enquiries are copied into the CRM by hand",
+      "Systems give different numbers for the same thing",
+    ],
+    capabilities: [
+      {
+        title: "Business systems",
+        points: ["Zoho ↔ Accounting", "Tally ↔ Business applications", "CRM ↔ ERP"],
+      },
+      {
+        title: "Customer channels",
+        points: ["Website ↔ CRM", "Zoho ↔ Website", "CRM ↔ WhatsApp"],
+      },
+      {
+        title: "AI & internal tools",
+        points: ["ERPNext ↔ AI", "APIs ↔ Internal applications"],
+      },
+    ],
+    platforms: ["Zoho", "ERPNext", "Tally", "WhatsApp", "REST APIs", "Webhooks"],
+    related: ["erp-business-software", "ai-business-automation", "custom-software-development"],
+  },
+  {
+    slug: "it-infrastructure-cloud",
+    group: "technology",
+    name: "IT Infrastructure & Cloud Solutions",
+    shortName: "IT Infrastructure & Cloud",
+    icon: "server",
+    summary:
+      "Reliable servers, cloud, backups, email and networks for growing businesses.",
+    keyMessage: "Reliable IT infrastructure for growing businesses.",
+    intro:
+      "Your software is only as dependable as the infrastructure underneath it. We set up and look after servers, cloud deployments, backups, networks, business email and secure access — and can help with hardware procurement when you need it.",
+    problems: [
+      "No reliable backup of business data",
+      "Servers or systems go down with nobody to call",
+      "Staff can't access systems securely from outside the office",
+      "Email and domain setup is messy",
+    ],
+    capabilities: [
+      {
+        title: "Servers & cloud",
+        points: [
+          "Server setup and administration",
+          "Windows Server and Linux servers",
+          "Cloud / VPS deployment",
+          "Application deployment",
+        ],
+      },
+      {
+        title: "Protect",
+        points: ["Backup solutions", "Security and access management", "Remote access"],
+      },
+      {
+        title: "Essentials",
+        points: [
+          "Network setup",
+          "Domain and hosting",
+          "Business email",
+          "Hardware procurement",
+        ],
+      },
+    ],
+    platforms: ["Windows Server", "Linux", "Cloud / VPS", "Business email", "Networking"],
+    related: ["custom-software-development", "erp-business-software", "integrations"],
+  },
+  {
+    slug: "digital-marketing",
+    group: "growth",
+    name: "Digital Marketing & Lead Generation",
+    shortName: "Digital Marketing",
+    icon: "growth",
+    summary:
+      "SEO, ads and social media connected to real leads and sales — not just traffic.",
+    keyMessage:
+      "Marketing measured by enquiries and sales, not just clicks and likes.",
+    intro:
+      "Traffic only matters if it turns into enquiries your sales team can follow up. We run SEO, paid ads and social media with tracking through to the CRM, so you can see which activity actually brings business.",
+    problems: [
+      "You need more enquiries from the right customers",
+      "Ad spend with no clear link to sales",
+      "The website doesn't rank for what customers search",
+      "No one reports what marketing is achieving",
+    ],
+    capabilities: [
+      {
+        title: "Be found",
+        points: ["SEO", "Website SEO", "Google Search Console", "Content strategy"],
+      },
+      {
+        title: "Generate demand",
+        points: [
+          "Google Ads / PPC",
+          "Social media marketing",
+          "Business / product promotion",
+          "Lead generation",
+        ],
+      },
+      {
+        title: "Convert & measure",
+        points: ["Marketing automation", "Analytics and reporting"],
+      },
+    ],
+    platforms: [
+      "Google Search Console",
+      "Google Ads",
+      "Google Analytics",
+      "Meta (Facebook / Instagram)",
+      "LinkedIn",
+    ],
+    related: ["website-development", "crm-sales-automation", "ai-business-automation"],
+  },
+];
+
+export function getService(slug: string) {
+  return SERVICES.find((s) => s.slug === slug);
+}
+
+export function getServicesByGroup(group: ServiceGroupId) {
+  return SERVICES.filter((s) => s.group === group);
+}
+
+export function getGroup(id: ServiceGroupId) {
+  return SERVICE_GROUPS.find((g) => g.id === id)!;
+}
