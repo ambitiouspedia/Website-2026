@@ -1,0 +1,175 @@
+/* ─── Header ─────────────────────────────────────────────────────────────────
+   Fixed, transparent over the dark page heroes; turns solid once scrolled.
+   Every page starts with a dark hero, so the header text is always light. */
+.header {
+  position: fixed;
+  inset: 0 0 auto 0;
+  z-index: 50;
+  color: #fff;
+}
+/* The blurred background lives on a pseudo-element, NOT on .header itself:
+   backdrop-filter on an element makes it the containing block for its
+   position:fixed descendants, which would shrink the mobile drawer to the
+   header's 72px height. */
+.header::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  opacity: 0;
+  background: rgba(12, 14, 18, 0.92);
+  box-shadow: 0 1px 0 var(--color-line-dark);
+  backdrop-filter: saturate(140%) blur(10px);
+  transition: opacity 0.25s;
+}
+.header--solid::before { opacity: 1; }
+
+.header__bar {
+  position: relative;
+  display: flex;
+  align-items: center;
+  gap: 24px;
+  height: var(--header-h);
+}
+
+/* ─── Logo ──────────────────────────────────────────────────────────────── */
+.logo { display: inline-flex; align-items: center; gap: 10px; flex-shrink: 0; }
+.logo__mark { width: 30px; height: auto; }
+.logo__text { display: flex; flex-direction: column; line-height: 1.1; }
+.logo__name { font-family: var(--font-display); font-weight: 800; font-size: 18px; letter-spacing: -0.01em; }
+.logo__sub { font-size: 11px; font-weight: 600; letter-spacing: 0.12em; text-transform: uppercase; color: var(--color-amber); }
+.logo--dark .logo__sub { color: var(--color-orange-ink); }
+
+/* ─── Desktop nav ───────────────────────────────────────────────────────── */
+.header__nav { display: none; align-items: center; gap: 4px; margin-left: auto; }
+.header__cta { display: none; min-height: 42px; padding: 10px 18px; }
+
+.nav-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  padding: 8px 14px;
+  border: 0;
+  border-radius: 999px;
+  background: none;
+  font-size: 15px;
+  font-weight: 500;
+  color: rgba(255, 255, 255, 0.82);
+  cursor: pointer;
+  transition: color 0.2s, background-color 0.2s;
+}
+.nav-link:hover, .nav-link.is-active { color: #fff; background: rgba(255, 255, 255, 0.08); }
+
+@media (min-width: 1100px) {
+  .header__nav { display: flex; }
+  .header__cta { display: inline-flex; }
+}
+
+/* ─── Services mega-menu ────────────────────────────────────────────────── */
+/* Panel is anchored to the header container (not the button) so it can never
+   run off the right edge of the viewport. */
+.mega { position: static; }
+.mega__chev { width: 16px; height: 16px; transition: transform 0.2s; }
+.mega[data-open="true"] .mega__chev { transform: rotate(180deg); }
+
+.mega__panel {
+  position: absolute;
+  top: calc(100% - 6px);
+  right: 24px;
+  width: min(860px, calc(100vw - 48px));
+  padding: 28px;
+  border-radius: var(--radius-lg);
+  background: #fff;
+  color: var(--color-text);
+  box-shadow: 0 24px 60px rgba(12, 14, 18, 0.25);
+  opacity: 0;
+  visibility: hidden;
+  transform: translateY(6px);
+  transition: opacity 0.18s, transform 0.18s, visibility 0.18s;
+}
+/* Invisible bridge so the menu doesn't close while the pointer crosses the gap */
+.mega__panel::before { content: ""; position: absolute; left: 0; right: 0; top: -14px; height: 14px; }
+.mega[data-open="true"] .mega__panel { opacity: 1; visibility: visible; transform: translateY(0); }
+
+.mega__grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 24px; }
+.mega__group {
+  margin-bottom: 10px;
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--color-orange-ink);
+}
+.mega__col li a {
+  display: block;
+  padding: 6px 0;
+  font-size: 15px;
+  font-weight: 500;
+  line-height: 1.35;
+}
+.mega__col li a:hover { color: var(--color-orange-ink); }
+.mega__all {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  margin-top: 20px;
+  padding-top: 18px;
+  border-top: 1px solid var(--color-line);
+  width: 100%;
+  font-weight: 600;
+  font-size: 15px;
+}
+.mega__all svg { width: 16px; height: 16px; }
+
+/* ─── Burger ────────────────────────────────────────────────────────────── */
+.burger {
+  display: grid;
+  gap: 5px;
+  margin-left: auto;
+  padding: 12px 10px;
+  border: 0;
+  background: none;
+  cursor: pointer;
+}
+.burger span { display: block; width: 22px; height: 2px; border-radius: 2px; background: #fff; transition: transform 0.25s, opacity 0.2s; }
+.burger[data-open="true"] span:nth-child(1) { transform: translateY(7px) rotate(45deg); }
+.burger[data-open="true"] span:nth-child(2) { opacity: 0; }
+.burger[data-open="true"] span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
+@media (min-width: 1100px) { .burger { display: none; } }
+
+/* ─── Mobile drawer ─────────────────────────────────────────────────────────
+   Fades in place rather than sliding in from off-screen, so it can never
+   create horizontal overflow on the page. */
+.drawer {
+  position: fixed;
+  inset: var(--header-h) 0 0 0;
+  overflow-y: auto;
+  background: var(--color-ink-950);
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity 0.2s, visibility 0.2s;
+}
+.drawer[data-open="true"] { opacity: 1; visibility: visible; }
+@media (min-width: 1100px) { .drawer { display: none; } }
+
+.drawer__nav { padding-top: 16px; padding-bottom: 40px; }
+.drawer__label {
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--color-amber);
+}
+.drawer__services { display: grid; grid-template-columns: 1fr; margin: 8px 0 20px; }
+@media (min-width: 640px) { .drawer__services { grid-template-columns: 1fr 1fr; column-gap: 24px; } }
+.drawer__services a { display: block; padding: 10px 0; color: rgba(255, 255, 255, 0.85); }
+.drawer__main { border-top: 1px solid var(--color-line-dark); }
+.drawer__main a {
+  display: block;
+  padding: 14px 0;
+  border-bottom: 1px solid var(--color-line-dark);
+  font-family: var(--font-display);
+  font-size: 22px;
+  font-weight: 700;
+}
+.drawer__cta { width: 100%; margin-top: 28px; }
