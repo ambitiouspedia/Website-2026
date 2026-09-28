@@ -20,7 +20,7 @@ export const ZOHO_WEBFORM: {
     xmIwtLD:
       "00d4dfd9ec8c46c7550f4e4041e1ed9bec90612d06164d619972e911e48c94e1c40b206e72a076ba8cbf6df60fa00bbc",
     actionType: "TGVhZHM=",
-    returnURL: "https://ambitiouspedia.com/contact/thank-you",
+    returnURL: "https://www.ambitiouspedia.com/contact/thank-you",
     // Google Ads click id — Zoho fills this itself when ads tracking is on
     zc_gad: "",
     // Zoho's spam honeypot ("honeypot" in base64) — must stay empty

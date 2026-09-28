@@ -8,7 +8,9 @@ export const SITE = {
   name: "Ambitious Pedia Tech and Services",
   shortName: "Ambitious Pedia",
   tagline: "Business Technology. Automation. AI. Digital Transformation.",
-  url: process.env.NEXT_PUBLIC_SITE_URL ?? "https://ambitiouspedia.com",
+  // Vercel serves the site on www (apex 308-redirects to it) — keep canonical
+  // URLs on the same host.
+  url: process.env.NEXT_PUBLIC_SITE_URL ?? "https://www.ambitiouspedia.com",
 
   // Started in 2018; formally registered in 2023. Keep both facts distinct.
   foundedYear: 2018,
