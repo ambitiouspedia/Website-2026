@@ -1,271 +1,259 @@
 import Link from "next/link";
-import { ArrowRight, Check } from "lucide-react";
-import IntegrationHub from "@/components/sections/IntegrationHub";
+import { ArrowRight, Check, Compass, Layers, Shuffle, LifeBuoy, MapPin, CalendarDays } from "lucide-react";
+import HeroVisual from "@/components/visuals/HeroVisual";
+import FlowVisual from "@/components/visuals/FlowVisual";
+import AiChat from "@/components/visuals/AiChat";
+import Marquee from "@/components/ui/Marquee";
+import SectionHead from "@/components/ui/SectionHead";
 import ProblemsGrid from "@/components/sections/ProblemsGrid";
-import ServiceGroups from "@/components/sections/ServiceGroups";
-import SalesFlow from "@/components/sections/SalesFlow";
-import ProcessSteps from "@/components/sections/ProcessSteps";
-import IndustriesGrid from "@/components/sections/IndustriesGrid";
+import ServicesBento from "@/components/sections/ServicesBento";
+import FocusPlatforms from "@/components/sections/FocusPlatforms";
+import ProcessStepper from "@/components/sections/ProcessStepper";
+import ProjectCards from "@/components/sections/ProjectCards";
+import IndustryTiles from "@/components/sections/IndustryTiles";
+import ArticleCard from "@/components/sections/ArticleCard";
+import Faq from "@/components/ui/Faq";
 import CtaBand from "@/components/ui/CtaBand";
-import { PLATFORM_GROUPS, INTEGRATION_EXAMPLES } from "@/data/platforms";
+import { PLATFORMS } from "@/data/platforms";
+import { PROJECTS } from "@/data/projects";
+import { FAQS } from "@/data/faq";
+import { INSIGHTS } from "@/data/insights";
+import { LEARNING } from "@/data/learning";
+import { SERVICES } from "@/data/services";
+import { sortByDate, readingTime } from "@/lib/content";
 import { SITE } from "@/lib/site";
+import { getFaqSchema, JsonLd } from "@/lib/seo";
 import "./home.css";
 
-export const metadata = {
-  alternates: { canonical: "/" },
-};
+export const metadata = { alternates: { canonical: "/" } };
 
-const PRINCIPLES = [
-  {
-    title: "Business first, technology second",
-    text: "We talk about leads, orders, stock and reports — then choose the software that supports them.",
-  },
-  {
-    title: "End-to-end",
-    text: "Analysis, implementation, integration, automation, training and support from one team.",
-  },
-  {
-    title: "The right fit, not one product",
-    text: "Zoho, ERPNext, Tally or a custom build — we recommend what suits your process and budget.",
-  },
+const WHY = [
+  { icon: Compass, title: "Business first", text: "We start with your process and problems — technology comes second." },
+  { icon: Layers, title: "End-to-end, one team", text: "Analysis, implementation, integration, automation, training and support." },
+  { icon: Shuffle, title: "The right fit", text: "Zoho, ERPNext, Microsoft 365 or custom — we recommend what suits you." },
+  { icon: LifeBuoy, title: "With you after go-live", text: "Ongoing support and improvements as your business grows." },
 ];
 
-const AI_USES = [
-  { title: "Business assistants", text: "Answer questions about orders, stock and customers from your ERP or CRM." },
-  { title: "Knowledge assistants", text: "Give staff instant answers from company documents and procedures." },
-  { title: "WhatsApp & Telegram", text: "Automated replies, updates and reminders on the channels customers use." },
-  { title: "Document & data processing", text: "Extract data from documents instead of typing it in." },
-  { title: "Automated reporting", text: "Daily and weekly reports compiled and sent automatically." },
-  { title: "Sales & support assistance", text: "Help your team respond faster with the right information." },
-];
+const HOME_PROJECTS = ["erpnext-ai-assistant", "crm-implementation", "inventory-management-system", "whatsapp-automation"];
 
 export default function HomePage() {
+  const insights = sortByDate(INSIGHTS);
+  const featured = insights.find((a) => a.featured) ?? insights[0];
+  const moreInsights = insights.filter((a) => a !== featured).slice(0, 2);
+  const learning = sortByDate(LEARNING).slice(0, 3);
+
   return (
     <>
-      {/* ─── Hero ─────────────────────────────────────────────────────── */}
+      {/* ─── 1. Hero ────────────────────────────────────────────────── */}
       <section className="hero">
+        <div className="blobs" aria-hidden="true"><span /><span /><span /></div>
         <div className="container hero__grid">
           <div className="hero__copy">
-            <p className="eyebrow">Business Technology · Automation · AI</p>
-            <h1>
-              Technology that <span className="hero__hl">simplifies operations</span>, automates
-              repetitive work and helps your business grow.
+            <p className="eyebrow hero__in" style={{ ["--d" as string]: 0 }}>ERP · CRM · AI · Automation · Cloud</p>
+            <h1 className="hero__in" style={{ ["--d" as string]: 1 }}>
+              Run your business on <span className="text-gradient">connected, automated</span> systems.
             </h1>
-            <p className="hero__lead">
-              Ambitious Pedia is a technology partner for SMEs and growing businesses. We implement
-              ERP and CRM, build AI automations and custom applications, connect your systems and
-              manage the IT underneath — all designed around how your business actually works.
+            <p className="hero__lead hero__in" style={{ ["--d" as string]: 2 }}>
+              We help growing businesses use technology, AI and automation to improve and scale their
+              operations — from Zoho and ERPNext to custom software, Microsoft 365 and cloud.
             </p>
-            <div className="hero__actions">
-              <Link href="/contact" className="btn btn--primary">
-                Book a consultation <ArrowRight aria-hidden="true" />
-              </Link>
-              <Link href="/services" className="btn btn--ghost-dark">
-                Explore services
-              </Link>
+            <div className="hero__actions hero__in" style={{ ["--d" as string]: 3 }}>
+              <Link href="/contact" className="btn btn--primary">Book a consultation <ArrowRight aria-hidden="true" /></Link>
+              <Link href="/services" className="btn btn--secondary">Explore services</Link>
             </div>
-            <p className="hero__meta">
-              {SITE.address.locality}, India · Working with businesses since {SITE.foundedYear}
-            </p>
+            <ul className="hero__trust hero__in" style={{ ["--d" as string]: 4 }}>
+              <li><CalendarDays aria-hidden="true" /> Since {SITE.foundedYear}</li>
+              <li><MapPin aria-hidden="true" /> {SITE.address.locality}, India</li>
+              <li><Check aria-hidden="true" /> {SERVICES.length} service areas</li>
+            </ul>
           </div>
-          <div className="hero__visual">
-            <IntegrationHub />
+          <div className="hero__visual hero__in" style={{ ["--d" as string]: 2 }}>
+            <HeroVisual />
           </div>
         </div>
       </section>
 
-      {/* ─── Problems we solve ────────────────────────────────────────── */}
+      {/* ─── 2. Platforms strip ────────────────────────────────────── */}
+      <section className="strip" aria-labelledby="strip-h">
+        <div className="container">
+          <p id="strip-h" className="strip__label">Platforms & tools we work with</p>
+        </div>
+        <Marquee items={PLATFORMS} label="Platforms and tools we work with" />
+      </section>
+
+      {/* ─── 3. Problems ───────────────────────────────────────────── */}
       <section className="section">
         <div className="container">
-          <div className="section-head">
-            <p className="eyebrow">What problems we solve</p>
-            <h2>Sound familiar?</h2>
-            <p>
-              Most businesses don&apos;t come to us asking for software. They come with a problem.
-              These are the ones we hear most.
-            </p>
-          </div>
+          <SectionHead
+            eyebrow="Problems we solve"
+            title="Sound familiar?"
+            text="Most businesses don't come to us asking for software — they come with a problem."
+            aside={<Link href="/solutions" className="link-arrow">All solutions <ArrowRight aria-hidden="true" /></Link>}
+          />
           <ProblemsGrid limit={6} />
-          <p className="home__more">
-            <Link href="/solutions" className="text-link">
-              See all the problems we solve <ArrowRight aria-hidden="true" />
-            </Link>
-          </p>
         </div>
       </section>
 
-      {/* ─── Who we are ───────────────────────────────────────────────── */}
-      <section className="section section--sand">
-        <div className="container who">
-          <div className="section-head">
-            <p className="eyebrow">Who we are</p>
-            <h2>We start with your business process — then choose the technology.</h2>
-            <p>
-              We help businesses move from manual and disconnected processes to connected,
-              automated and scalable digital operations. Business owners and decision-makers work
-              with us because we understand how sales, accounts and operations fit together, and
-              we can analyse a problem and then build or implement the right solution.
-            </p>
-            <Link href="/about" className="text-link who__link">
-              About Ambitious Pedia <ArrowRight aria-hidden="true" />
-            </Link>
-          </div>
-          <ul className="who__principles">
-            {PRINCIPLES.map((p) => (
-              <li key={p.title}>
-                <Check aria-hidden="true" />
-                <div>
-                  <h3>{p.title}</h3>
-                  <p>{p.text}</p>
-                </div>
-              </li>
-            ))}
-          </ul>
+      {/* ─── 4. What we do, in one picture ─────────────────────────── */}
+      <section className="section section--white">
+        <div className="container">
+          <SectionHead eyebrow="What we do" title="From manual work to connected, automated operations." center />
+          <FlowVisual />
         </div>
       </section>
 
-      {/* ─── Services ─────────────────────────────────────────────────── */}
+      {/* ─── 5. Services ───────────────────────────────────────────── */}
+      <section className="section section--tint">
+        <div className="container">
+          <SectionHead
+            eyebrow="Services"
+            title="One partner for business software, AI, custom technology and IT."
+            aside={<Link href="/services" className="link-arrow">All services <ArrowRight aria-hidden="true" /></Link>}
+          />
+          <ServicesBento />
+        </div>
+      </section>
+
+      {/* ─── 6. Focus platforms ────────────────────────────────────── */}
       <section className="section">
         <div className="container">
-          <div className="section-head">
-            <p className="eyebrow">Our services</p>
-            <h2>One partner for business software, automation, AI and IT.</h2>
-            <p>Grouped by what they do for your business, so it&apos;s easy to find where to start.</p>
-          </div>
-          <ServiceGroups />
+          <SectionHead
+            eyebrow="Platforms we focus on"
+            title="Zoho, Microsoft 365 and the cloud — set up properly."
+            text="Three areas where most growing businesses need a hand."
+          />
+          <FocusPlatforms />
         </div>
       </section>
 
-      {/* ─── CRM & sales flow ─────────────────────────────────────────── */}
-      <section className="section section--sand">
+      {/* ─── 7. AI & Automation ────────────────────────────────────── */}
+      <section className="section section--dark ai-band">
+        <div className="ai-band__glow" aria-hidden="true" />
+        <div className="container ai-band__grid">
+          <div data-reveal>
+            <p className="eyebrow">AI & Automation</p>
+            <h2 className="h2 ai-band__title">AI that works with your data — not a generic chatbot.</h2>
+            <p className="lead ai-band__lead">Assistants and automations connected to your ERP, CRM, documents and WhatsApp.</p>
+            <ul className="tick-list ai-band__list">
+              <li>Answers from live business data</li>
+              <li>WhatsApp & Telegram automation</li>
+              <li>Documents turned into data</li>
+              <li>Reports prepared and sent automatically</li>
+            </ul>
+            <Link href="/services/ai-business-automation" className="btn btn--primary">Explore AI & Automation <ArrowRight aria-hidden="true" /></Link>
+          </div>
+          <AiChat />
+        </div>
+      </section>
+
+      {/* ─── 8. How we work ────────────────────────────────────────── */}
+      <section className="section section--dark process-band">
         <div className="container">
-          <div className="section-head">
-            <p className="eyebrow">CRM & sales automation</p>
-            <h2>Your complete sales process, managed digitally.</h2>
-            <p>
-              From the first enquiry to repeat orders — every lead tracked, every follow-up on
-              time, and management able to see the whole pipeline.
-            </p>
-          </div>
-          <SalesFlow />
-          <p className="home__more">
-            <Link href="/services/crm-sales-automation" className="text-link">
-              CRM implementation & sales automation <ArrowRight aria-hidden="true" />
-            </Link>
-          </p>
+          <SectionHead eyebrow="How we work" title="A clear process, from first call to ongoing support." center />
+          <ProcessStepper />
         </div>
       </section>
 
-      {/* ─── AI ───────────────────────────────────────────────────────── */}
-      <section className="section section--dark">
-        <div className="container ai">
-          <div className="section-head ai__head">
-            <p className="eyebrow">AI & business automation</p>
-            <h2>AI that works with your business processes and data — not just a generic chatbot.</h2>
-            <p>
-              Useful AI needs to know your products, customers and procedures. We connect AI
-              assistants and automations to your ERP, CRM and documents. We are actively building
-              AI assistants that work with ERPNext and OpenClaw.
-            </p>
-            <Link href="/services/ai-business-automation" className="btn btn--primary ai__cta">
-              Explore AI & automation <ArrowRight aria-hidden="true" />
-            </Link>
-          </div>
-          <ul className="ai__uses">
-            {AI_USES.map((u) => (
-              <li key={u.title}>
-                <h3>{u.title}</h3>
-                <p>{u.text}</p>
-              </li>
-            ))}
-          </ul>
-        </div>
-      </section>
-
-      {/* ─── Integrations ─────────────────────────────────────────────── */}
+      {/* ─── 9. Projects ───────────────────────────────────────────── */}
       <section className="section">
         <div className="container">
-          <div className="section-head">
-            <p className="eyebrow">Integrations</p>
-            <h2>Stop entering the same information twice.</h2>
-            <p>
-              CRM ↔ ERP ↔ Accounting ↔ Website ↔ WhatsApp ↔ AI ↔ Internal systems. We connect the
-              tools you already use so data flows between them automatically.
-            </p>
-          </div>
-          <ul className="integrations">
-            {INTEGRATION_EXAMPLES.map((ex) => (
-              <li key={`${ex.from}-${ex.to}`}>
-                <p className="integrations__pair">
-                  <span>{ex.from}</span>
-                  <span className="integrations__arrow" aria-label="connected with">⇄</span>
-                  <span>{ex.to}</span>
-                </p>
-                <p className="integrations__text">{ex.text}</p>
-              </li>
-            ))}
-          </ul>
-          <p className="home__more">
-            <Link href="/services/integrations" className="text-link">
-              How we approach integrations <ArrowRight aria-hidden="true" />
-            </Link>
-          </p>
+          <SectionHead
+            eyebrow="Projects"
+            title="Solutions we've delivered."
+            aside={<Link href="/projects" className="link-arrow">All projects <ArrowRight aria-hidden="true" /></Link>}
+          />
+          <ProjectCards compact items={PROJECTS.filter((p) => HOME_PROJECTS.includes(p.slug))} />
         </div>
       </section>
 
-      {/* ─── Platforms & technology ───────────────────────────────────── */}
-      <section className="section section--sand">
+      {/* ─── 10. Industries ────────────────────────────────────────── */}
+      <section className="section section--white">
         <div className="container">
-          <div className="section-head">
-            <p className="eyebrow">Technology & platforms</p>
-            <h2>Platforms we work with.</h2>
-            <p>
-              The technology matters — but it comes second. These are the platforms and tools we
-              implement, integrate and build with.
-            </p>
+          <SectionHead
+            eyebrow="Industries"
+            title="Businesses we work with."
+            aside={<Link href="/industries" className="link-arrow">Industries <ArrowRight aria-hidden="true" /></Link>}
+          />
+          <IndustryTiles />
+        </div>
+      </section>
+
+      {/* ─── 11. Why Ambitious Pedia ───────────────────────────────── */}
+      <section className="section">
+        <div className="container why">
+          <div className="why__intro" data-reveal>
+            <p className="eyebrow">Why Ambitious Pedia</p>
+            <h2 className="h2">A technology partner, not just a vendor.</h2>
+            <p className="lead">We understand how sales, accounts and operations fit together — and build the technology around them.</p>
+            <div className="why__facts glass">
+              <div><b>{SITE.foundedYear}</b><span>Working with businesses since</span></div>
+              <div><b>{SERVICES.length}</b><span>Service areas</span></div>
+              <div><b>7</b><span>Step delivery process</span></div>
+            </div>
           </div>
-          <div className="platforms">
-            {PLATFORM_GROUPS.map((g) => (
-              <div key={g.name} className="platforms__group">
-                <h3>{g.name}</h3>
-                <ul className="chips">
-                  {g.items.map((it) => <li key={it} className="chip">{it}</li>)}
-                </ul>
+          <ul className="why__grid">
+            {WHY.map((w, i) => (
+              <li key={w.title} className="card card--hover spot" data-reveal style={{ ["--d" as string]: i }}>
+                <span className="icon-tile"><w.icon aria-hidden="true" /></span>
+                <h3>{w.title}</h3>
+                <p>{w.text}</p>
+              </li>
+            ))}
+          </ul>
+        </div>
+      </section>
+
+      {/* ─── 12. Resources ─────────────────────────────────────────── */}
+      <section className="section section--white">
+        <div className="container">
+          <SectionHead
+            eyebrow="Resources"
+            title="Insights and learning for business technology."
+            aside={<Link href="/insights" className="link-arrow">All insights <ArrowRight aria-hidden="true" /></Link>}
+          />
+          <div className="res">
+            <div className="res__main">
+              <ArticleCard a={featured} base="/insights" featured />
+              <div className="res__pair">
+                {moreInsights.map((a, i) => <ArticleCard key={a.slug} a={a} base="/insights" i={i + 1} />)}
               </div>
-            ))}
+            </div>
+            <aside className="res__learn card" data-reveal>
+              <p className="eyebrow">Learning</p>
+              <h3>Guides & checklists</h3>
+              <ul>
+                {learning.map((l) => (
+                  <li key={l.slug}>
+                    <Link href={`/learning/${l.slug}`}>
+                      <span className="res__fmt">{l.format}</span>
+                      <b>{l.title}</b>
+                      <small>{readingTime(l)} min read</small>
+                    </Link>
+                  </li>
+                ))}
+              </ul>
+              <Link href="/learning" className="link-arrow">Visit Learning <ArrowRight aria-hidden="true" /></Link>
+            </aside>
           </div>
         </div>
       </section>
 
-      {/* ─── Process ──────────────────────────────────────────────────── */}
-      <section className="section section--dark">
-        <div className="container">
-          <div className="section-head">
-            <p className="eyebrow">Our process</p>
-            <h2>A process, not just a list of services.</h2>
-            <p>Every engagement follows the same path — so the solution fits the business, and keeps working after go-live.</p>
-          </div>
-          <ProcessSteps />
-        </div>
-      </section>
-
-      {/* ─── Industries ───────────────────────────────────────────────── */}
+      {/* ─── 13. FAQ ───────────────────────────────────────────────── */}
       <section className="section">
-        <div className="container">
-          <div className="section-head">
-            <p className="eyebrow">Industries</p>
-            <h2>Industries we&apos;ve worked with.</h2>
+        <div className="container faq-layout">
+          <div data-reveal>
+            <p className="eyebrow">FAQ</p>
+            <h2 className="h2">Questions we hear often.</h2>
+            <p className="lead" style={{ marginTop: 14 }}>Can&apos;t find your answer? We&apos;re happy to talk it through.</p>
+            <Link href="/contact" className="btn btn--secondary" style={{ marginTop: 24 }}>Ask a question</Link>
           </div>
-          <IndustriesGrid />
-          <p className="home__more">
-            <Link href="/industries" className="text-link">
-              More about the industries we serve <ArrowRight aria-hidden="true" />
-            </Link>
-          </p>
+          <Faq items={FAQS} />
         </div>
       </section>
 
+      {/* ─── 14. CTA ───────────────────────────────────────────────── */}
       <CtaBand />
+      <JsonLd data={getFaqSchema(FAQS)} />
     </>
   );
 }

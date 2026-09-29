@@ -70,6 +70,52 @@ export function getBreadcrumbSchema(items: { name: string; item: string }[]) {
   };
 }
 
+export function getWebsiteSchema() {
+  return {
+    "@context": "https://schema.org",
+    "@type": "WebSite",
+    name: SITE.shortName,
+    url: SITE.url,
+    publisher: { "@type": "Organization", name: SITE.name },
+  };
+}
+
+export function getFaqSchema(items: { q: string; a: string }[]) {
+  return {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    mainEntity: items.map((f) => ({
+      "@type": "Question",
+      name: f.q,
+      acceptedAnswer: { "@type": "Answer", text: f.a },
+    })),
+  };
+}
+
+export function getArticleSchema(a: {
+  title: string;
+  description: string;
+  date: string;
+  author: string;
+  path: string;
+}) {
+  return {
+    "@context": "https://schema.org",
+    "@type": "Article",
+    headline: a.title,
+    description: a.description,
+    datePublished: a.date,
+    dateModified: a.date,
+    author: { "@type": "Organization", name: a.author },
+    publisher: {
+      "@type": "Organization",
+      name: SITE.name,
+      logo: { "@type": "ImageObject", url: `${SITE.url}/images/logo.png` },
+    },
+    mainEntityOfPage: `${SITE.url}${a.path}`,
+  };
+}
+
 export function JsonLd({ data }: { data: object }) {
   return (
     <script

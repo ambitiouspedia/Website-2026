@@ -27,7 +27,7 @@ export default function ThankYouPage() {
       <section className="section">
         <div className="container">
           <p className="prose">
-            <Link href="/services" className="text-link">Browse our services</Link>
+            <Link href="/services" className="link-arrow">Browse our services</Link>
           </p>
         </div>
       </section>

@@ -26,6 +26,11 @@ const nextConfig: NextConfig = {
         permanent: true,
       })),
       { source: "/privacy", destination: "/privacy-policy", permanent: true },
+      // v2: case studies became Projects; blog lives under Insights
+      { source: "/case-studies", destination: "/projects", permanent: true },
+      { source: "/case-studies/:slug", destination: "/projects", permanent: true },
+      { source: "/blog", destination: "/insights", permanent: true },
+      { source: "/blogs", destination: "/insights", permanent: true },
       { source: "/index.html", destination: "/", permanent: true },
     ];
   },

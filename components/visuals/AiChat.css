@@ -1,0 +1,36 @@
+.chat { padding: 18px; border-radius: var(--r-lg); color: var(--text-on-dark); }
+.chat__head { display: flex; align-items: center; gap: 12px; padding-bottom: 14px; border-bottom: 1px solid var(--line-dark); }
+.chat__head b { display: block; font-size: 14.5px; color: #fff; }
+.chat__status { font-size: 12px; color: var(--teal-300); }
+.chat__avatar {
+  display: grid; place-items: center; width: 38px; height: 38px; border-radius: 12px;
+  background: linear-gradient(135deg, var(--teal-500), var(--teal-300)); color: var(--navy-950);
+}
+.chat__avatar svg { width: 19px; height: 19px; }
+
+.chat__body { display: grid; gap: 10px; padding: 16px 0; }
+.chat__msg { max-width: 88%; padding: 10px 13px; font-size: 13.5px; line-height: 1.5; }
+.chat__msg--me { justify-self: end; border-radius: 14px 14px 4px 14px; background: var(--teal-700); color: #fff; }
+.chat__msg--ai { justify-self: start; border-radius: 14px 14px 14px 4px; background: rgba(255, 255, 255, 0.07); border: 1px solid var(--line-dark); }
+.chat__done { display: flex; align-items: center; gap: 8px; }
+.chat__done svg { width: 16px; height: 16px; color: #4ade80; }
+
+.chat__table { display: grid; gap: 2px; margin-top: 8px; font-size: 12.5px; }
+.chat__table li { display: grid; grid-template-columns: 1fr 1.2fr 0.7fr; gap: 8px; padding: 6px 8px; border-radius: 6px; background: rgba(255, 255, 255, 0.04); }
+.chat__table li:first-child { background: none; color: var(--text-on-dark-2); font-size: 11px; text-transform: uppercase; letter-spacing: 0.06em; }
+.chat__table .is-warn { color: var(--amber-400); font-weight: 600; }
+
+.chat__sources { display: flex; flex-wrap: wrap; gap: 8px; padding-top: 14px; border-top: 1px solid var(--line-dark); }
+.chat__sources span { display: inline-flex; align-items: center; gap: 6px; padding: 4px 10px; border-radius: 99px; background: rgba(255, 255, 255, 0.05); font-size: 12px; color: var(--text-on-dark-2); }
+.chat__sources svg { width: 13px; height: 13px; }
+
+/* Sequenced message reveal once the card is in view */
+html.js .chat .chat__msg { opacity: 0; transform: translateY(8px); }
+html.js .chat.is-in .chat__msg {
+  animation: chat-in 500ms var(--ease) forwards;
+  animation-delay: calc(400ms + var(--s) * 700ms);
+}
+@keyframes chat-in { to { opacity: 1; transform: none; } }
+@media (prefers-reduced-motion: reduce) {
+  html.js .chat .chat__msg { opacity: 1; transform: none; }
+}

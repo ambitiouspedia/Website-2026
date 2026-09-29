@@ -1,0 +1,18 @@
+.ind { display: grid; grid-template-columns: repeat(2, 1fr); gap: 12px; }
+@media (min-width: 720px) { .ind { grid-template-columns: repeat(3, 1fr); } }
+@media (min-width: 1100px) { .ind { grid-template-columns: repeat(5, 1fr); } }
+
+.ind__tile { display: flex; flex-direction: column; padding: 20px; }
+.ind__tile .icon-tile { width: 40px; height: 40px; margin-bottom: 14px; }
+.ind__tile .icon-tile svg { width: 20px; height: 20px; }
+.ind__tile h3 { font-size: 16px; }
+.ind__tile p { font-size: 13.5px; }
+.ind__example {
+  margin-top: auto; padding-top: 12px; font-size: 12px; font-weight: 600; color: var(--teal-700);
+}
+.ind__tile--proof { border-color: var(--teal-100); }
+
+@media (max-width: 480px) {
+  .ind__tile { padding: 16px; }
+  .ind__tile p { display: none; }
+}

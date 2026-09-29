@@ -1,6 +1,9 @@
 import type { Metadata } from "next";
+import { Compass, Layers, Handshake } from "lucide-react";
 import PageHero from "@/components/ui/PageHero";
-import ProcessSteps from "@/components/sections/ProcessSteps";
+import SectionHead from "@/components/ui/SectionHead";
+import ProcessStepper from "@/components/sections/ProcessStepper";
+import FlowVisual from "@/components/visuals/FlowVisual";
 import CtaBand from "@/components/ui/CtaBand";
 import { SITE } from "@/lib/site";
 import { getBreadcrumbSchema, JsonLd } from "@/lib/seo";
@@ -14,19 +17,10 @@ export const metadata: Metadata = {
   openGraph: { url: "/about" },
 };
 
-const BELIEFS = [
-  {
-    title: "Business language first",
-    text: "We talk about your leads, orders, stock and reports before we talk about software. Technology is the means, not the message.",
-  },
-  {
-    title: "Implementation, not just software",
-    text: "Software only delivers value when it matches your process and your team uses it. That is where we spend our effort.",
-  },
-  {
-    title: "A long-term technology partner",
-    text: "We want to be the company you call whenever a business problem needs a technology answer — today and as you grow.",
-  },
+const POINTS = [
+  { icon: Compass, title: "Business language first", text: "We talk about leads, orders, stock and reports before software." },
+  { icon: Layers, title: "Implementation, not just software", text: "Value comes from fitting the system to your process — and your team using it." },
+  { icon: Handshake, title: "A long-term partner", text: "The company you call whenever a business problem needs a technology answer." },
 ];
 
 export default function AboutPage() {
@@ -34,98 +28,83 @@ export default function AboutPage() {
     <>
       <PageHero
         eyebrow="About us"
-        title="A technology partner for SMEs and growing businesses."
-        lead="We help businesses use technology to simplify operations, automate repetitive work and grow."
+        title="A technology partner for growing businesses."
+        lead="We help businesses use technology, AI and automation to improve and scale their operations."
         crumbs={[{ name: "About", href: "/about" }]}
+        visual={
+          <div className="facts glass">
+            <h2>At a glance</h2>
+            <dl>
+            <div><dt>Working with businesses since</dt><dd>{SITE.foundedYear}</dd></div>
+            <div><dt>Registered</dt><dd>{SITE.registeredYear}</dd></div>
+            <div><dt>Based in</dt><dd>{SITE.address.locality}, {SITE.address.region}</dd></div>
+            <div><dt>GSTIN</dt><dd>{SITE.gstin}</dd></div>
+            <div><dt>Contact</dt><dd>{SITE.salesEmail}</dd></div>
+            </dl>
+          </div>
+        }
       />
 
       <section className="section">
         <div className="container about-grid">
-          <div className="prose">
-            <h2>Who we are</h2>
+          <div className="prose" data-reveal>
+            <h2 style={{ marginTop: 0 }}>Who we are</h2>
             <p>
-              {SITE.name} is a technology and digital transformation company based in{" "}
-              {SITE.address.locality}, {SITE.address.region}. We help businesses digitise their
-              operations, automate processes, implement business software and build custom
-              technology solutions.
+              {SITE.name} is a technology and digital transformation company in {SITE.address.locality}. We started
+              working with businesses in {SITE.foundedYear} and formally registered the company in {SITE.registeredYear}.
             </p>
             <p>
-              We started working with businesses in {SITE.foundedYear} and formally registered
-              the company in {SITE.registeredYear}. Over that time we have worked with manufacturers,
-              distributors, solar companies and software companies — on business software,
-              websites, mobile applications and AI.
+              We implement ERP and CRM (including Zoho and ERPNext), build AI assistants and automations, develop
+              custom applications, set up Microsoft 365, cloud and IT infrastructure, and run digital marketing — for
+              manufacturers, distributors, solar and software companies, and SMEs of every kind.
             </p>
-            <p>
-              Our work covers ERP and CRM implementation, AI and business automation, custom
-              business applications, websites, system integrations, IT infrastructure and digital
-              marketing. What connects all of it is a focus on the business process first: we
-              analyse the problem, then build or implement the solution that fits.
-            </p>
-
-            <h3>Who we work with</h3>
-            <p>
-              Business owners and decision-makers at SMEs and growing companies — especially
-              those who are:
-            </p>
-            <ul>
-              <li>running sales, stock or accounts in Excel</li>
-              <li>using several systems that don&apos;t communicate with each other</li>
-              <li>ready for an ERP or CRM but unsure where to start</li>
-              <li>looking to use AI and automation in a practical way</li>
-              <li>in need of dependable IT, cloud and server support</li>
+          </div>
+          <div data-reveal>
+            <p className="eyebrow">Who we work with</p>
+            <ul className="tick-list" style={{ marginTop: 16 }}>
+              <li>Businesses running sales, stock or accounts in Excel</li>
+              <li>Teams using systems that don&apos;t talk to each other</li>
+              <li>Companies ready for an ERP or CRM</li>
+              <li>Owners who want practical AI and automation</li>
+              <li>Anyone who needs dependable email, cloud and IT</li>
             </ul>
           </div>
-
-          <aside className="facts" aria-label="Company facts">
-            <h2>At a glance</h2>
-            <dl>
-              <div><dt>Company</dt><dd>{SITE.name}</dd></div>
-              <div><dt>Working with businesses since</dt><dd>{SITE.foundedYear}</dd></div>
-              <div><dt>Registered</dt><dd>{SITE.registeredYear}</dd></div>
-              <div><dt>Location</dt><dd>{SITE.address.locality}, {SITE.address.region}, {SITE.address.country}</dd></div>
-              <div><dt>GSTIN</dt><dd>{SITE.gstin}</dd></div>
-              <div><dt>Contact</dt><dd>{SITE.salesEmail}<br />{SITE.phone}</dd></div>
-            </dl>
-          </aside>
         </div>
       </section>
 
-      <section className="section section--sand">
+      <section className="section section--white">
         <div className="container">
-          <div className="section-head">
-            <p className="eyebrow">What we believe</p>
-            <h2>How we think about technology.</h2>
-          </div>
-          <ul className="vision">
-            {BELIEFS.map((b) => (
-              <li key={b.title}>
-                <h3>{b.title}</h3>
-                <p>{b.text}</p>
+          <SectionHead eyebrow="What we believe" title="How we think about technology." />
+          <ul className="about-points">
+            {POINTS.map((p, i) => (
+              <li key={p.title} className="card card--hover spot" data-reveal style={{ ["--d" as string]: i }}>
+                <span className="icon-tile"><p.icon aria-hidden="true" /></span>
+                <h3>{p.title}</h3>
+                <p>{p.text}</p>
               </li>
             ))}
           </ul>
         </div>
       </section>
 
-      <section className="section section--dark">
+      <section className="section">
         <div className="container">
-          <div className="section-head">
-            <p className="eyebrow">Our approach</p>
-            <h2>A process, not just a list of services.</h2>
-          </div>
-          <ProcessSteps />
+          <SectionHead eyebrow="What we do" title="From manual work to connected operations." center />
+          <FlowVisual />
         </div>
       </section>
 
-      <div className="cta-band--spaced">
+      <section className="section section--dark">
+        <div className="container">
+          <SectionHead eyebrow="Our approach" title="A process, not just a list of services." center />
+          <ProcessStepper />
+        </div>
+      </section>
+
+      <div className="cta--spaced">
         <CtaBand />
       </div>
-      <JsonLd
-        data={getBreadcrumbSchema([
-          { name: "Home", item: "/" },
-          { name: "About", item: "/about" },
-        ])}
-      />
+      <JsonLd data={getBreadcrumbSchema([{ name: "Home", item: "/" }, { name: "About", item: "/about" }])} />
     </>
   );
 }

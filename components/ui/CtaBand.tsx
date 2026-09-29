@@ -5,20 +5,21 @@ import "./CtaBand.css";
 
 export default function CtaBand({
   title = "Tell us what's slowing your business down.",
-  text = "Book a consultation. We'll understand your process, point out where technology can help, and recommend the right next step.",
+  text = "A short call is enough to understand your process and suggest the right next step.",
 }: {
   title?: string;
   text?: string;
 }) {
   return (
-    <section className="cta-band">
+    <section className="cta">
       <div className="container">
-        <div className="cta-band__panel">
-          <div className="cta-band__copy">
+        <div className="cta__panel" data-reveal>
+          <div className="cta__glow" aria-hidden="true" />
+          <div className="cta__copy">
             <h2>{title}</h2>
             <p>{text}</p>
           </div>
-          <div className="cta-band__actions">
+          <div className="cta__actions">
             <Link href="/contact" className="btn btn--primary">
               Book a consultation <ArrowRight aria-hidden="true" />
             </Link>

@@ -1,42 +1,32 @@
 import type { MetadataRoute } from "next";
 import { SITE } from "@/lib/site";
-import { SERVICES } from "@/data/services";
-import { getPublishedCaseStudies } from "@/data/caseStudies";
+import { SERVICES, FEATURED_SLUGS } from "@/data/services";
+import { INSIGHTS } from "@/data/insights";
+import { LEARNING } from "@/data/learning";
 
 export default function sitemap(): MetadataRoute.Sitemap {
-  const caseStudies = getPublishedCaseStudies();
+  const now = new Date();
+  const page = (path: string, priority: number, changeFrequency: "weekly" | "monthly" | "yearly" = "monthly") => ({
+    url: `${SITE.url}${path}`,
+    lastModified: now,
+    changeFrequency,
+    priority,
+  });
 
-  const staticRoutes = [
-    "",
-    "/services",
-    "/solutions",
-    "/industries",
-    "/about",
-    "/contact",
-    "/privacy-policy",
-    "/terms",
-    // Case studies index only once there is something on it
-    ...(caseStudies.length > 0 ? ["/case-studies"] : []),
-  ].map((route) => ({
-    url: `${SITE.url}${route}`,
-    lastModified: new Date(),
-    changeFrequency: "monthly" as const,
-    priority: route === "" ? 1 : route.startsWith("/privacy") || route === "/terms" ? 0.3 : 0.8,
-  }));
-
-  const services = SERVICES.map((s) => ({
-    url: `${SITE.url}/services/${s.slug}`,
-    lastModified: new Date(),
-    changeFrequency: "monthly" as const,
-    priority: 0.9,
-  }));
-
-  const studies = caseStudies.map((c) => ({
-    url: `${SITE.url}/case-studies/${c.slug}`,
-    lastModified: new Date(),
-    changeFrequency: "yearly" as const,
-    priority: 0.7,
-  }));
-
-  return [...staticRoutes, ...services, ...studies];
+  return [
+    page("", 1, "weekly"),
+    page("/services", 0.9),
+    ...SERVICES.map((s) => page(`/services/${s.slug}`, FEATURED_SLUGS.includes(s.slug) ? 0.9 : 0.8)),
+    page("/solutions", 0.8),
+    page("/projects", 0.8),
+    page("/industries", 0.7),
+    page("/about", 0.7),
+    page("/contact", 0.8),
+    page("/insights", 0.7, "weekly"),
+    ...INSIGHTS.map((a) => ({ ...page(`/insights/${a.slug}`, 0.6), lastModified: new Date(a.date) })),
+    page("/learning", 0.7, "weekly"),
+    ...LEARNING.map((a) => ({ ...page(`/learning/${a.slug}`, 0.6), lastModified: new Date(a.date) })),
+    page("/privacy-policy", 0.2, "yearly"),
+    page("/terms", 0.2, "yearly"),
+  ];
 }

@@ -1,0 +1,90 @@
+import type { Article } from "@/lib/content";
+
+// ─── Insights (company blog) ───────────────────────────────────────────────
+// Starter articles written for the v2 redesign (2026-09-29) — founder to
+// review before launch. General, practical advice only: no statistics,
+// client claims or vendor pricing that could go out of date.
+
+export const INSIGHT_CATEGORIES = [
+  "AI & Automation",
+  "ERP & CRM",
+  "Business Technology",
+  "Digital Transformation",
+  "Software Development",
+  "IT & Cloud",
+  "Digital Marketing",
+];
+
+export const INSIGHTS: Article[] = [
+  {
+    slug: "signs-your-business-has-outgrown-excel",
+    title: "Five signs your business has outgrown Excel",
+    description: "Spreadsheets are a great start — until several people need the same data at once. Here's how to tell it's time for a proper system.",
+    category: "Digital Transformation",
+    date: "2026-09-29",
+    author: "Ambitious Pedia Team",
+    cover: "teal",
+    featured: true,
+    services: ["erp-business-software", "custom-software-development"],
+    body: [
+      { type: "p", text: "Almost every business starts on spreadsheets, and for good reason: they're flexible, familiar and free. The problems begin quietly, when the business grows and the spreadsheet doesn't. These are the five signs we see most often." },
+      { type: "h2", text: "1. There are several versions of the truth" },
+      { type: "p", text: "Sales has one file, accounts has another, and the warehouse keeps its own copy. Each is \"correct\" — for the person who last updated it. When a meeting starts with an argument about whose numbers are right, the spreadsheet has stopped being a tool and started being a risk." },
+      { type: "h2", text: "2. Reports take days, not minutes" },
+      { type: "p", text: "If a monthly sales or stock report means someone copying data between files for a day or two, you are paying skilled people to do work a system does automatically — and getting the answer too late to act on it." },
+      { type: "h2", text: "3. Only one person understands the file" },
+      { type: "p", text: "Complex formulas, hidden sheets and macros built over years create a single point of failure. When that person is on leave, work slows down; if they leave, knowledge leaves with them." },
+      { type: "h2", text: "4. Follow-ups and reorders are missed" },
+      { type: "p", text: "Spreadsheets don't send reminders. A lead that should have been called yesterday, or an item that should have been reordered last week, only gets noticed when someone happens to look." },
+      { type: "h2", text: "5. You're re-typing the same data" },
+      { type: "p", text: "An order typed into a sheet, then into an invoice, then into a dispatch list is three chances for an error. Re-entering data is the clearest sign that your processes need to be connected." },
+      { type: "h2", text: "What to do next" },
+      { type: "p", text: "Outgrowing Excel doesn't automatically mean a large ERP project. Depending on the problem, the right step might be:" },
+      { type: "ul", items: ["A CRM for leads and follow-ups", "An ERP such as ERPNext or Zoho for sales, stock and accounts together", "A focused custom application for one critical process", "Integrations so your existing tools share data"] },
+      { type: "p", text: "Start by listing the processes that hurt most, then choose the smallest change that fixes them properly." },
+    ],
+  },
+  {
+    slug: "ai-that-knows-your-business",
+    title: "AI that knows your business: why generic chatbots fall short",
+    description: "A chatbot that doesn't know your products, customers or stock can't help much. Useful business AI starts with your own data.",
+    category: "AI & Automation",
+    date: "2026-09-29",
+    author: "Ambitious Pedia Team",
+    cover: "navy",
+    services: ["ai-business-automation", "integrations"],
+    body: [
+      { type: "p", text: "General-purpose AI tools are impressive at writing and summarising. But ask one \"how many orders are pending dispatch?\" and it has no idea — because the answer lives in your ERP, not on the internet." },
+      { type: "h2", text: "The missing ingredient is your data" },
+      { type: "p", text: "Business value comes from connecting AI to the systems where your information already lives: your ERP, CRM, documents and procedures. Once connected, an assistant can answer real questions with real, current answers." },
+      { type: "ul", items: ["\"What's the stock of item X across warehouses?\"", "\"Which quotations from last week haven't been followed up?\"", "\"Summarise this supplier's last five invoices.\"", "\"What does our policy say about returns after 30 days?\""] },
+      { type: "h2", text: "Start with one job, not a platform" },
+      { type: "p", text: "The most successful AI projects start small and specific: one team, one repetitive task, one clear measure of success. A sales assistant that drafts follow-ups from CRM data, or an internal assistant that answers policy questions, proves value quickly." },
+      { type: "h2", text: "Keep control of access" },
+      { type: "p", text: "An assistant should only see what the person asking is allowed to see. Good implementations reuse your existing roles and permissions, keep an audit trail and make it clear where each answer came from." },
+      { type: "h2", text: "Where it fits" },
+      { type: "ul", items: ["Internal knowledge assistants for staff", "Sales and support assistance", "Document and data extraction", "Automated reports sent on WhatsApp or email"] },
+      { type: "quote", text: "The question isn't \"should we use AI?\" but \"which repetitive task, using which data, would we most like to hand off?\"" },
+    ],
+  },
+  {
+    slug: "zoho-one-or-individual-apps",
+    title: "Zoho One or individual Zoho apps? How to decide",
+    description: "Zoho One bundles most of Zoho's applications under one licence. It isn't always the right choice — here's how to think it through.",
+    category: "ERP & CRM",
+    date: "2026-09-29",
+    author: "Ambitious Pedia Team",
+    cover: "amber",
+    services: ["zoho-solutions", "crm-sales-automation"],
+    body: [
+      { type: "p", text: "Zoho offers two ways to buy: individual applications such as Zoho CRM or Zoho Books, or Zoho One — a suite that includes most Zoho applications under a single licence. Both can be the right answer." },
+      { type: "h2", text: "When individual apps make sense" },
+      { type: "ul", items: ["You only need one or two functions — for example CRM for the sales team", "Only some employees need access", "You're starting small and want to prove value first"] },
+      { type: "h2", text: "When Zoho One makes sense" },
+      { type: "ul", items: ["Several teams need different Zoho apps (sales, accounts, HR, support)", "You want a single sign-on and one admin console", "You plan to connect data across apps, for example CRM to Books to Inventory"] },
+      { type: "h2", text: "Questions to answer before you buy" },
+      { type: "ol", items: ["Which processes do we want to move into Zoho in the next 12 months?", "How many users need each app?", "What are we replacing, and what data must be migrated?", "Which workflows should be automated from day one?"] },
+      { type: "p", text: "Licensing models and prices change, so always compare current plans on Zoho's website against your user count. The bigger decision is the implementation: whichever option you choose, value comes from configuring the apps around your processes and training your team to use them." },
+    ],
+  },
+];

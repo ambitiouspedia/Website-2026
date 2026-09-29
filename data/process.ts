@@ -1,66 +1,16 @@
-// ─── Our approach ──────────────────────────────────────────────────────────
-// From the founder's brief (section 10). The short labels form the headline
-// sequence: Understand → Analyze → Design → Implement → Integrate → Automate → Support.
+// ─── How we work ───────────────────────────────────────────────────────────
+// Seven steps from the founder's brief (2026-09-29).
 
 export const PROCESS_STEPS = [
-  {
-    label: "Understand",
-    title: "Understand the business",
-    text: "We start with how your business runs today — people, processes and the tools you already use.",
-  },
-  {
-    label: "Analyze",
-    title: "Identify problems and bottlenecks",
-    text: "We find where time is lost, data is re-entered or decisions are made without the right information.",
-  },
-  {
-    label: "Design",
-    title: "Recommend the right technology",
-    text: "Platform, custom build or a mix — chosen for your process and budget, not for what is easiest to sell.",
-  },
-  {
-    label: "Implement",
-    title: "Implement the solution",
-    text: "Configuration, customization, development and data migration, delivered in stages you can review.",
-  },
-  {
-    label: "Integrate",
-    title: "Integrate existing systems",
-    text: "Connect the new solution with your CRM, accounting, website and communication channels.",
-  },
-  {
-    label: "Automate",
-    title: "Automate repetitive processes",
-    text: "Follow-ups, reports, notifications and data entry handled automatically.",
-  },
-  {
-    label: "Train",
-    title: "Train the team",
-    text: "Hands-on training so your team actually uses the system from day one.",
-  },
-  {
-    label: "Support",
-    title: "Provide ongoing support",
-    text: "We stay involved after go-live — fixing issues, adding improvements and growing the system with you.",
-  },
+  { label: "Understand", title: "Understand your business", text: "How your business runs today — people, processes and the tools you already use.", deliverable: "Process map" },
+  { label: "Analyze", title: "Find the bottlenecks", text: "Where time is lost, data is re-typed or decisions are made without the right information.", deliverable: "Problem list & priorities" },
+  { label: "Design", title: "Choose the right technology", text: "Platform, custom build or a mix — chosen for your process and budget.", deliverable: "Solution design" },
+  { label: "Implement", title: "Build and configure", text: "Configuration, development and data migration, delivered in stages you can review.", deliverable: "Working system" },
+  { label: "Integrate", title: "Connect your systems", text: "CRM, accounting, website, WhatsApp and internal tools linked together.", deliverable: "Connected data flow" },
+  { label: "Automate", title: "Remove repetitive work", text: "Follow-ups, reports, notifications and data entry handled automatically.", deliverable: "Automations live" },
+  { label: "Support", title: "Train and support", text: "Hands-on training, then ongoing support and improvements as you grow.", deliverable: "Trained team, ongoing help" },
 ] as const;
 
-export const SALES_FLOW = [
-  "Lead",
-  "Follow-up",
-  "Quotation",
-  "Negotiation",
-  "Order",
-  "Customer",
-  "Repeat Business",
-] as const;
+export const SALES_FLOW = ["Lead", "Follow-up", "Quotation", "Negotiation", "Order", "Customer", "Repeat"] as const;
 
-export const INTEGRATION_NODES = [
-  "CRM",
-  "ERP",
-  "Accounting",
-  "Website",
-  "WhatsApp",
-  "AI",
-  "Internal Systems",
-] as const;
+export const INTEGRATION_NODES = ["CRM", "ERP", "Accounting", "Website", "WhatsApp", "AI", "Email"] as const;

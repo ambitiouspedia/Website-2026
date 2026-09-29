@@ -1,0 +1,53 @@
+.acard { display: flex; flex-direction: column; padding: 0; overflow: hidden; }
+.acard__body { display: flex; flex-direction: column; flex: 1; padding: 20px 22px 22px; }
+.acard__meta { display: flex; flex-wrap: wrap; gap: 4px 12px; font-size: 12.5px; color: var(--text-3); }
+.acard__cat { font-weight: 700; color: var(--teal-700); }
+.acard h3 { margin-top: 10px; font-size: 18px; line-height: 1.3; }
+/* Stretched link: whole card clickable, one accessible link */
+.acard__link::after { content: ""; position: absolute; inset: 0; z-index: 1; }
+.acard__link:focus-visible { outline: none; }
+.acard:has(.acard__link:focus-visible) { outline: 2.5px solid var(--teal-500); outline-offset: 2px; }
+.acard__desc { margin-top: 8px; font-size: 14.5px; color: var(--text-2); }
+.acard__foot {
+  display: flex; align-items: center; justify-content: space-between; margin-top: auto; padding-top: 16px;
+  font-size: 13px; color: var(--text-3);
+}
+.acard__foot svg { width: 18px; height: 18px; color: var(--teal-700); transition: transform var(--dur-fast) var(--ease); }
+.acard:hover .acard__foot svg { transform: translate(2px, -2px); }
+.acard:hover h3 { color: var(--teal-800); }
+
+@media (min-width: 900px) {
+  .acard--featured { flex-direction: row; }
+  .acard--featured .acover { width: 48%; height: auto; min-height: 300px; }
+  .acard--featured .acard__body { padding: 32px; justify-content: center; }
+  .acard--featured h3 { font-size: 26px; }
+  .acard--featured .acard__desc { font-size: 16px; }
+  .acard--featured .acard__foot { margin-top: 24px; }
+}
+
+/* Generated cover art */
+.acover { position: relative; height: 170px; overflow: hidden; flex-shrink: 0; }
+.acover--lg { height: 220px; }
+.acover--teal { background: linear-gradient(135deg, #0b7285, #1597a8 55%, #5cc4d1); }
+.acover--navy { background: linear-gradient(135deg, #0b1324, #13314a 60%, #0b7285); }
+.acover--amber { background: linear-gradient(135deg, #fdb022, #f59e0b 45%, #0b7285 130%); }
+.acover__grid {
+  position: absolute; inset: 0; opacity: 0.25;
+  background-image: linear-gradient(rgba(255, 255, 255, 0.5) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255, 255, 255, 0.5) 1px, transparent 1px);
+  background-size: 26px 26px;
+  -webkit-mask-image: radial-gradient(80% 80% at 70% 30%, #000, transparent);
+  mask-image: radial-gradient(80% 80% at 70% 30%, #000, transparent);
+}
+.acover__orb {
+  position: absolute; right: -40px; top: -40px; width: 180px; height: 180px; border-radius: 50%;
+  background: radial-gradient(circle, rgba(255, 255, 255, 0.55), transparent 65%);
+  transition: transform 600ms var(--ease);
+}
+.acard:hover .acover__orb { transform: translate(-20px, 16px) scale(1.1); }
+.acover__label {
+  position: absolute; left: 18px; bottom: 16px; padding: 5px 11px; border-radius: 99px;
+  background: rgba(255, 255, 255, 0.2); border: 1px solid rgba(255, 255, 255, 0.35);
+  -webkit-backdrop-filter: blur(6px); backdrop-filter: blur(6px);
+  color: #fff; font-size: 12px; font-weight: 700;
+}

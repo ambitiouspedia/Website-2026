@@ -2,15 +2,18 @@ import { notFound } from "next/navigation";
 import type { Metadata } from "next";
 import Link from "next/link";
 import { ArrowRight, AlertCircle } from "lucide-react";
-import { SERVICES, getService, getGroup } from "@/data/services";
-import { SOLUTIONS } from "@/data/solutions";
+import { SERVICES, FEATURED_SLUGS, getService, getCategory } from "@/data/services";
+import { PROJECTS } from "@/data/projects";
 import PageHero from "@/components/ui/PageHero";
-import ServiceIcon from "@/components/ui/ServiceIcon";
-import SalesFlow from "@/components/sections/SalesFlow";
-import IntegrationHub from "@/components/sections/IntegrationHub";
-import ProcessSteps from "@/components/sections/ProcessSteps";
+import SectionHead from "@/components/ui/SectionHead";
+import Icon from "@/components/ui/Icon";
+import Faq from "@/components/ui/Faq";
+import SalesFlow from "@/components/visuals/SalesFlow";
+import IntegrationHub from "@/components/visuals/IntegrationHub";
+import AiChat from "@/components/visuals/AiChat";
+import ProjectCards from "@/components/sections/ProjectCards";
 import EnquiryForm from "@/components/forms/EnquiryForm";
-import { getBreadcrumbSchema, getServiceSchema, JsonLd } from "@/lib/seo";
+import { getBreadcrumbSchema, getServiceSchema, getFaqSchema, JsonLd } from "@/lib/seo";
 import "./service.css";
 
 export function generateStaticParams() {
@@ -19,125 +22,78 @@ export function generateStaticParams() {
 
 export async function generateMetadata({ params }: PageProps<"/services/[slug]">): Promise<Metadata> {
   const { slug } = await params;
-  const service = getService(slug);
-  if (!service) return {};
+  const s = getService(slug);
+  if (!s) return {};
   return {
-    title: service.name,
-    description: service.summary,
+    title: s.name,
+    description: s.summary,
     alternates: { canonical: `/services/${slug}` },
-    openGraph: { url: `/services/${slug}` },
+    openGraph: { url: `/services/${slug}`, title: s.name, description: s.summary },
   };
+}
+
+// Hero-side glass card: the service's key promise + the platforms behind it.
+function KeyCard({ icon, message, platforms }: { icon: Parameters<typeof Icon>[0]["name"]; message: string; platforms: string[] }) {
+  return (
+    <div className="keycard glass">
+      <span className="icon-tile icon-tile--active"><Icon name={icon} /></span>
+      <p className="keycard__msg">{message}</p>
+      <div className="keycard__plat">
+        <span>Platforms & technology</span>
+        <ul className="chips">{platforms.slice(0, 6).map((p) => <li key={p} className="chip">{p}</li>)}</ul>
+      </div>
+    </div>
+  );
 }
 
 export default async function ServicePage({ params }: PageProps<"/services/[slug]">) {
   const { slug } = await params;
-  const service = getService(slug);
-  if (!service) notFound();
+  const s = getService(slug);
+  if (!s) notFound();
 
-  const group = getGroup(service.group);
-  const related = service.related.map(getService).filter((s) => s !== undefined);
-  const solutions = SOLUTIONS.filter((s) => s.services.includes(service.slug));
+  const category = getCategory(s.category);
+  const featured = FEATURED_SLUGS.includes(s.slug);
+  const related = s.related.map(getService).filter((r) => r !== undefined);
+  const projects = PROJECTS.filter((p) => p.services.includes(s.slug)).slice(0, 4);
 
   return (
     <>
       <PageHero
-        eyebrow={group.name}
-        title={service.name}
-        lead={service.intro}
-        crumbs={[
-          { name: "Services", href: "/services" },
-          { name: service.shortName, href: `/services/${slug}` },
-        ]}
-      />
+        eyebrow={category.name}
+        title={s.name}
+        lead={s.intro}
+        crumbs={[{ name: "Services", href: "/services" }, { name: s.shortName, href: `/services/${slug}` }]}
+        visual={<KeyCard icon={s.icon} message={s.keyMessage} platforms={s.platforms} />}
+      >
+        <ul className="svc-hl">
+          {s.highlights.map((h) => <li key={h}>{h}</li>)}
+        </ul>
+      </PageHero>
 
-      {/* Key message + problems */}
+      {/* Problems */}
       <section className="section">
-        <div className="container svc-intro">
-          <blockquote className="svc-key">
-            <span className="icon-badge"><ServiceIcon name={service.icon} /></span>
-            <p>{service.keyMessage}</p>
-          </blockquote>
-          <div>
-            <h2 className="svc-h2">Is this you?</h2>
-            <ul className="svc-problems">
-              {service.problems.map((p) => (
-                <li key={p}><AlertCircle aria-hidden="true" />{p}</li>
-              ))}
-            </ul>
-          </div>
-        </div>
-      </section>
-
-      {/* Capabilities */}
-      <section className="section section--sand">
         <div className="container">
-          <div className="section-head">
-            <p className="eyebrow">What we do</p>
-            <h2>How we help</h2>
-          </div>
-          <div className="svc-caps">
-            {service.capabilities.map((c) => (
-              <div key={c.title} className="svc-cap">
-                <h3>{c.title}</h3>
-                <ul>{c.points.map((p) => <li key={p}>{p}</li>)}</ul>
-              </div>
+          <SectionHead eyebrow="Is this you?" title="Problems we solve" />
+          <ul className="svc-problems">
+            {s.problems.map((p, i) => (
+              <li key={p} className="card" data-reveal style={{ ["--d" as string]: i }}>
+                <AlertCircle aria-hidden="true" /> {p}
+              </li>
             ))}
-          </div>
-        </div>
-      </section>
-
-      {/* Service-specific visual */}
-      {service.slug === "crm-sales-automation" && (
-        <section className="section">
-          <div className="container">
-            <div className="section-head">
-              <p className="eyebrow">The sales process</p>
-              <h2>From first enquiry to repeat business.</h2>
-            </div>
-            <SalesFlow />
-          </div>
-        </section>
-      )}
-      {service.slug === "integrations" && (
-        <section className="section section--dark">
-          <div className="container svc-hub">
-            <div className="section-head">
-              <p className="eyebrow">Connected systems</p>
-              <h2>CRM ↔ ERP ↔ Accounting ↔ Website ↔ WhatsApp ↔ AI ↔ Internal systems</h2>
-              <p>Information is entered once and flows to every system that needs it — so nobody re-types the same customer, order or invoice.</p>
-            </div>
-            <IntegrationHub />
-          </div>
-        </section>
-      )}
-
-      {/* Platforms */}
-      <section className="section">
-        <div className="container svc-platforms">
-          <div>
-            <p className="eyebrow">Platforms & technology</p>
-            <h2 className="svc-h2">What we work with</h2>
-            {service.platformsNote && <p className="svc-note">{service.platformsNote}</p>}
-          </div>
-          <ul className="chips">
-            {service.platforms.map((p) => <li key={p} className="chip">{p}</li>)}
           </ul>
         </div>
       </section>
 
-      {/* Related problems */}
-      {solutions.length > 0 && (
-        <section className="section section--sand">
+      {/* Vendor products (detailed pages) */}
+      {s.products && (
+        <section className="section section--white">
           <div className="container">
-            <div className="section-head">
-              <p className="eyebrow">Problems this solves</p>
-              <h2>What customers tell us</h2>
-            </div>
-            <ul className="svc-solutions">
-              {solutions.map((s) => (
-                <li key={s.slug}>
-                  <p className="svc-solutions__q">“{s.problem}”</p>
-                  <p>{s.approach}</p>
+            <SectionHead eyebrow="What's covered" title={s.productsTitle ?? "What's covered"} />
+            <ul className="svc-products">
+              {s.products.map((p, i) => (
+                <li key={p.name} className="card card--hover spot" data-reveal style={{ ["--d" as string]: i % 3 }}>
+                  <h3>{p.name}</h3>
+                  <p>{p.text}</p>
                 </li>
               ))}
             </ul>
@@ -145,30 +101,119 @@ export default async function ServicePage({ params }: PageProps<"/services/[slug
         </section>
       )}
 
-      {/* Process */}
-      <section className="section section--dark">
+      {/* Capabilities */}
+      <section className={`section ${s.products ? "" : "section--white"}`}>
         <div className="container">
-          <div className="section-head">
-            <p className="eyebrow">How we deliver</p>
-            <h2>Understand → Analyze → Design → Implement → Integrate → Automate → Support</h2>
+          <SectionHead eyebrow="What we do" title="How we help" />
+          <div className="svc-caps">
+            {s.capabilities.map((c, i) => (
+              <div key={c.title} className="svc-cap card" data-reveal style={{ ["--d" as string]: i }}>
+                <span className="svc-cap__num">{String(i + 1).padStart(2, "0")}</span>
+                <h3>{c.title}</h3>
+                <ul className="tick-list">{c.points.map((p) => <li key={p}>{p}</li>)}</ul>
+              </div>
+            ))}
           </div>
-          <ProcessSteps compact />
         </div>
       </section>
 
-      {/* Enquiry + related */}
-      <section className="section">
+      {/* Service-specific visual */}
+      {s.slug === "crm-sales-automation" && (
+        <section className="section section--white">
+          <div className="container">
+            <SectionHead eyebrow="The sales process" title="From first enquiry to repeat business." />
+            <SalesFlow />
+          </div>
+        </section>
+      )}
+      {s.slug === "integrations" && (
+        <section className="section section--white">
+          <div className="container svc-split">
+            <SectionHead eyebrow="Connected systems" title="One flow of data across every system." text="Information is entered once and reaches every system that needs it." />
+            <IntegrationHub />
+          </div>
+        </section>
+      )}
+      {s.slug === "ai-business-automation" && (
+        <section className="section section--dark">
+          <div className="container svc-split">
+            <SectionHead eyebrow="In practice" title="Ask a question. Get an answer from your own data." text="An assistant connected to your ERP, documents and WhatsApp." />
+            <AiChat />
+          </div>
+        </section>
+      )}
+
+      {/* Phases (detailed pages) */}
+      {s.phases && (
+        <section className="section section--tint">
+          <div className="container">
+            <SectionHead eyebrow="How it works" title="How an engagement runs" />
+            <ol className="phases">
+              {s.phases.map((p, i) => (
+                <li key={p.title} data-reveal style={{ ["--d" as string]: i }}>
+                  <span className="phases__num">{i + 1}</span>
+                  <div>
+                    <h3>{p.title}</h3>
+                    <p>{p.text}</p>
+                  </div>
+                </li>
+              ))}
+            </ol>
+          </div>
+        </section>
+      )}
+
+      {/* Platforms (non-featured pages show them here; featured pages in the hero card) */}
+      {!featured && (
+        <section className="section section--flush-top">
+          <div className="container">
+            <div className="svc-plat card" data-reveal>
+              <div>
+                <p className="eyebrow">Platforms & technology</p>
+                <h2 className="h3" style={{ marginTop: 8 }}>What we work with</h2>
+              </div>
+              <ul className="chips">{s.platforms.map((p) => <li key={p} className="chip chip--teal">{p}</li>)}</ul>
+            </div>
+          </div>
+        </section>
+      )}
+
+      {/* Related projects */}
+      {projects.length > 0 && (
+        <section className="section section--white">
+          <div className="container">
+            <SectionHead
+              eyebrow="Projects"
+              title="Related work"
+              aside={<Link href="/projects" className="link-arrow">All projects <ArrowRight aria-hidden="true" /></Link>}
+            />
+            <ProjectCards compact items={projects} />
+          </div>
+        </section>
+      )}
+
+      {/* FAQ */}
+      {s.faqs && (
+        <section className="section">
+          <div className="container container--narrow">
+            <SectionHead eyebrow="FAQ" title={`${s.shortName}: common questions`} center />
+            <Faq items={s.faqs} />
+          </div>
+        </section>
+      )}
+
+      {/* Enquiry */}
+      <section className="section section--tint" id="enquire">
         <div className="container svc-enquiry">
-          <EnquiryForm defaultService={service.name} title={`Talk to us about ${service.shortName.toLowerCase()}`} />
+          <EnquiryForm defaultService={s.name} title={`Talk to us about ${s.shortName}`} />
           <aside className="svc-related">
-            <h2 className="svc-related__title">Related services</h2>
+            <h2 className="h3">Related services</h2>
             <ul>
               {related.map((r) => (
                 <li key={r.slug}>
-                  <Link href={`/services/${r.slug}`}>
-                    <span className="icon-badge"><ServiceIcon name={r.icon} /></span>
-                    <span>{r.name}</span>
-                    <ArrowRight aria-hidden="true" />
+                  <Link href={`/services/${r.slug}`} className="card card--hover">
+                    <span className="icon-tile"><Icon name={r.icon} /></span>
+                    <span><b>{r.shortName}</b><small>{r.summary}</small></span>
                   </Link>
                 </li>
               ))}
@@ -177,14 +222,9 @@ export default async function ServicePage({ params }: PageProps<"/services/[slug
         </div>
       </section>
 
-      <JsonLd data={getServiceSchema(service)} />
-      <JsonLd
-        data={getBreadcrumbSchema([
-          { name: "Home", item: "/" },
-          { name: "Services", item: "/services" },
-          { name: service.name, item: `/services/${slug}` },
-        ])}
-      />
+      <JsonLd data={getServiceSchema(s)} />
+      {s.faqs && <JsonLd data={getFaqSchema(s.faqs)} />}
+      <JsonLd data={getBreadcrumbSchema([{ name: "Home", item: "/" }, { name: "Services", item: "/services" }, { name: s.name, item: `/services/${slug}` }])} />
     </>
   );
 }
